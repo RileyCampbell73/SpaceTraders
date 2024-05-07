@@ -1,2 +1,0 @@
-C:\Users\Riley-5\Desktop\SpaceTraders\vueapp\obj\Debug\vueapp.esproj.SuggestedBindingRedirects.cache
-C:\Users\Riley-5\Desktop\SpaceTraders\vueapp\obj\Debug\vueapp.esproj.CoreCompileInputs.cache
