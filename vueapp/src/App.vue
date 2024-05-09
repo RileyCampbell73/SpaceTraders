@@ -1,12 +1,18 @@
 <template>
     <!--<img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-    <MyAgent :_Agent="Agent_data"></MyAgent>
+    <!--<div v-show="NewAgentRequired">-->
+    <div v-show="NewAgentRequired">
+        <button @click="createAgent(Deeve_Stanger)">Create New Agent</button>
+    </div>
+    
+    <MyAgent :_Agent="Agent_data" ></MyAgent>
     <Ships 
            :_Ships="Ships_data"
 
            @update_agent="(agent) => Agent_data = agent"
-           ></Ships>
+           >
+    </Ships>
     <Contracts :_Contracts="Contracts_data"></Contracts>
     <hr/>
     <Systems 
@@ -33,23 +39,74 @@
     var Contracts_data = ref([])
     var Systems_data = ref([])
 
-    //get data
-    fetch('agent')
-        .then(r => r.json())
-        .then(json => { Agent_data.value = json.data })
+    var NewAgentRequired = ref(false);
+    getAgentData();
 
-    fetch('ships')
+    function getAgentData() {
+        //get data
+        fetch('agent')
+            .then(r => r.json())
+            .then(json => {
+                switch (json.ResponseCode) {
+                    case 12:
+                        alert(json.Message)
+                        NewAgentRequired.value = true;
+                        break;
+                    default:
+                        Agent_data.value = json.data;
+                        getShips()
+                        getContracts()
+                        getSystems()
+                        break;
+                }
+            })
+    }
+
+    function createAgent(name) {
+        name = "Deeve_Stanger"
+        const requestOptions = {
+            method: "POST"
+        };
+
+        fetch('agent/register?faction=' + "COSMIC" + '&name=' + "Deeve_Stanger" + '&email=' + "riley.campbell73@gmail.com", requestOptions)
+            .then(r => r.json())
+            .then(json => {
+                debugger
+
+                //if success
+                //refresh agentdata
+                //get everything else
+
+                //var shipIndex = Ships.value.map(e => e.symbol).indexOf(shipId);
+                //Ships.value[shipIndex].cargo = json.data.cargo;
+                //emit('update_agent', json.data.agent)
+            })
+            
+    }
+
+    function getShips(){
+        fetch('ships')
         .then(r => r.json())
         .then(json => { Ships_data.value = json.data })
 
-    fetch('contracts')
+    }
+    function getContracts(){
+        fetch('contracts')
         .then(r => r.json())
         .then(json => { Contracts_data.value = json.data })
+    }
+    function getSystems(){
+        fetch('systems')
+        .then(r => r.json())
+        .then(json => { Systems_data.value = json.data })
 
-    //fetch('systems')
-    //    .then(r => r.json())
-    //    .then(json => { Systems_data.value = json.data })
+    }
 
+    
+
+    
+
+  
         
 
 

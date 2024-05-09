@@ -17,14 +17,14 @@ namespace webapi.Controllers
         [HttpGet(Name = "GetContracts")]
         public async Task<string> GetAsync()
         {
-            return await Caller.ST_API_Call("my/contracts");
+            return null;//await Caller.ST_API_Call("my/contracts");
         }
 
         [HttpPost]
         [Route("acceptContract")]
         public async Task<string> AcceptContractAsync(string contractId)
         {
-            return await Caller.ST_API_Call($"my/contracts/{contractId}/accept");
+            return null;//await Caller.ST_API_Call($"my/contracts/{contractId}/accept");
         }
     }
 }

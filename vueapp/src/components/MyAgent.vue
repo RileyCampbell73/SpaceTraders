@@ -12,7 +12,7 @@
     var Agent = ref({})
 
     const props = defineProps({
-        _Agent: Object
+        _Agent: Object,
     })
     watch(() => props._Agent, (data) => {
         Agent.value = data

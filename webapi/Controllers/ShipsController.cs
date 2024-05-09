@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 using webapi.APICalls;
 
 namespace webapi.Controllers
@@ -19,7 +20,15 @@ namespace webapi.Controllers
         public async Task<string> GetAsync()
         {
 
-            return await Caller.ST_API_Call("my/ships");
+            //return await Caller.ST_API_Call("my/ships");
+
+            using (HttpResponseMessage response = await Caller.ST_API_Call("my/ships"))
+            {
+                //response.EnsureSuccessStatusCode();
+                var body = response.Content.ReadAsStringAsync();
+                Console.WriteLine(body);
+                return await body;
+            }
         }
 
         [HttpPost]
@@ -27,14 +36,14 @@ namespace webapi.Controllers
         public async Task<string> NavShipAsync(string shipid, string waypoint)
         {
 
-            return await Caller.ST_API_Call($"my/ships/{shipid}/navigate", JsonContent.Create(new { waypointSymbol = waypoint }));
+            return null;//await Caller.ST_API_Call($"my/ships/{shipid}/navigate", JsonContent.Create(new { waypointSymbol = waypoint }));
         }
 
         [HttpPost]
         [Route("dockShip")]
         public async Task<string> DockShipAsync(string shipid)
         {
-            return await Caller.ST_API_Call($"my/ships/{shipid}/dock");
+            return null;//await Caller.ST_API_Call($"my/ships/{shipid}/dock");
         }
         
         [HttpPost]
@@ -42,28 +51,28 @@ namespace webapi.Controllers
         public async Task<string> RefuelShipAsync(string shipid)
         {
             
-            return await Caller.ST_API_Call($"my/ships/{shipid}/refuel");
+            return null;//await Caller.ST_API_Call($"my/ships/{shipid}/refuel");
         }
 
         [HttpPost]
         [Route("orbit")]
         public async Task<string> OrbitShipAsync(string shipid)
         {
-            return await Caller.ST_API_Call($"my/ships/{shipid}/orbit");
+            return null;//await Caller.ST_API_Call($"my/ships/{shipid}/orbit");
         }
 
         [HttpPost]
         [Route("extract")]
         public async Task<string> ExtractResourceAsync(string shipid)
         {
-            return await Caller.ST_API_Call($"my/ships/{shipid}/extract");
+            return null;//await Caller.ST_API_Call($"my/ships/{shipid}/extract");
         }
 
         [HttpPost]
         [Route("sell")]
         public async Task<string> SellResourceAsync(string shipid, string resource, string units)
         {
-            return await Caller.ST_API_Call($"my/ships/{shipid}/sell", JsonContent.Create(new { symbol = resource, units = units }));
+            return null;//await Caller.ST_API_Call($"my/ships/{shipid}/sell", JsonContent.Create(new { symbol = resource, units = units }));
         }
     }
 }
