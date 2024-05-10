@@ -22,7 +22,7 @@ namespace webapi.Controllers
 
             //return await Caller.ST_API_Call("my/ships");
 
-            using (HttpResponseMessage response = await Caller.ST_API_Call("my/ships"))
+            using (HttpResponseMessage response = await Caller.ST_API_Call("my/ships", HttpMethod.Get))
             {
                 //response.EnsureSuccessStatusCode();
                 var body = response.Content.ReadAsStringAsync();
